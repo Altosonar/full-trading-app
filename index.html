@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futures Trader Pro</title>
+    <title>Trading Suite Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* All CSS styles from both applications combined */
+        /* Combined CSS with consistent theming */
         :root {
             --primary: #4361ee;
             --primary-light: #4895ef;
@@ -64,31 +64,25 @@
             color: var(--dark);
             min-height: 100vh;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
             font-size: 16px;
             transition: var(--transition);
-            padding: 8px;
         }
         
-        .calculator-container {
+        .app-container {
             width: 100%;
             max-width: 480px;
-            background: var(--card-bg);
+            margin: 0 auto;
+            background: var(--body-bg);
             border-radius: 0;
-            box-shadow: var(--shadow);
             overflow: hidden;
+            transition: var(--transition);
             height: 100vh;
             max-height: 100vh;
             display: flex;
             flex-direction: column;
-            transition: var(--transition);
-            margin: 0 auto;
-            padding: 0;
         }
         
-        .calculator-header {
+        .app-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             padding: 20px 15px;
@@ -100,7 +94,7 @@
             flex-shrink: 0;
         }
         
-        .calculator-title {
+        .app-title {
             font-size: 22px;
             font-weight: 700;
             display: flex;
@@ -134,7 +128,7 @@
             transform: scale(1.05);
         }
 
-        /* UPDATED: Bottom Navigation */
+        /* Bottom Navigation */
         .tab-navigation {
             display: flex;
             background: var(--card-bg);
@@ -169,7 +163,7 @@
             font-size: 20px;
         }
 
-        .calculator-content {
+        .app-content {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -697,7 +691,7 @@
                 display: none !important;
             }
             
-            .calculator-container {
+            .app-container {
                 max-width: 100%;
                 box-shadow: none;
                 height: auto;
@@ -883,7 +877,7 @@
             overflow-y: auto;
         }
 
-        /* NEW: Trade Preview Styles */
+        /* Trade Preview Styles */
         .trade-preview {
             position: fixed;
             top: 50%;
@@ -959,7 +953,7 @@
             100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
         }
         
-        /* NEW: Success Notification Styles */
+        /* Success Notification Styles */
         .success-notification {
             position: fixed;
             top: 50%;
@@ -1029,7 +1023,7 @@
             color: var(--dark);
         }
 
-        /* NEW: Deleted Trades Section */
+        /* Deleted Trades Section */
         .deleted-trades-section {
             margin-top: 25px;
             border-top: 1px solid var(--border);
@@ -1053,7 +1047,7 @@
             background: rgba(76, 201, 240, 0.1);
         }
 
-        /* Dashboard Styles */
+        /* DASHBOARD STYLES */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1175,6 +1169,7 @@
             width: 100%;
         }
 
+        /* Data container styles for charts */
         .chart-data-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1409,7 +1404,7 @@
 
         /* Responsive adjustments */
         @media (max-width: 480px) {
-            .calculator-container {
+            .app-container {
                 height: 100vh;
                 max-height: 100vh;
             }
@@ -1418,11 +1413,11 @@
                 padding: 0;
             }
             
-            .calculator-header {
+            .app-header {
                 padding: 15px 10px;
             }
             
-            .calculator-title {
+            .app-title {
                 font-size: 18px;
             }
             
@@ -1513,11 +1508,11 @@
 </head>
 <body>
 
-<div class="calculator-container">
-    <header class="calculator-header">
-        <h1 class="calculator-title">
+<div class="app-container">
+    <header class="app-header">
+        <h1 class="app-title">
             <i class="fas fa-chart-line"></i>
-            Futures Trader Pro
+            Trading Suite Pro
         </h1>
         <div class="header-actions">
             <button class="header-btn" id="darkModeToggle" aria-label="Toggle Dark Mode">
@@ -1526,473 +1521,9 @@
         </div>
     </header>
 
-    <div class="calculator-content">
-        <!-- Dashboard Tab -->
-        <div class="tab-content active" id="dashboard-tab">
-            <!-- Account Summary Stats -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-title">Account Balance</div>
-                    <div class="stat-value profit" id="accountBalance">$8,500.00</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">Risk Per Trade</div>
-                    <div class="stat-value" id="riskPerTrade">$36.00</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">Win Rate</div>
-                    <div class="stat-value" id="winRate">50.0%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">Risk:Reward Ratio</div>
-                    <div class="stat-value risk-reward" id="riskReward">1:3</div>
-                </div>
-            </div>
-
-            <!-- Account Balance Chart -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Account Balance</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="balanceChart" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="balanceChart" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="balanceChart" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="balanceChart" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="balanceChart" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="balanceChart"></canvas>
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label">Total Return</div>
-                            <div class="data-value positive" id="balanceTotalReturn">+70%</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Starting Balance</div>
-                            <div class="data-value" id="balanceStartingBalance">$5,000.00</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Monthly Growth</div>
-                            <div class="data-value positive" id="balanceMonthlyGrowth">+5.8%</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Best Month</div>
-                            <div class="data-value positive" id="balanceBestMonth">October (+12.4%)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Account Growth Projection -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Account Growth Projection</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="projectionChart" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="projectionChart" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="projectionChart" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="projectionChart" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="projectionChart" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    
-                    <div class="projection-controls">
-                        <button class="projection-control-btn active" id="projectionTypeMonteCarlo">Monte Carlo</button>
-                        <button class="projection-control-btn" id="projectionTypeLinear">Linear</button>
-                    </div>
-                    
-                    <div class="simulation-slider">
-                        <label for="simulationCount">Simulation Count: <span id="simulationCountValue">1000</span></label>
-                        <input type="range" id="simulationCount" min="100" max="5000" step="100" value="1000">
-                    </div>
-                    
-                    <div class="chart-container">
-                        <canvas id="projectionChart"></canvas>
-                    </div>
-                    
-                    <div class="probability-bands">
-                        <div class="probability-band">
-                            <div class="band-color" style="background-color: rgba(76, 175, 80, 0.3);"></div>
-                            <span>90% Confidence</span>
-                        </div>
-                        <div class="probability-band">
-                            <div class="band-color" style="background-color: rgba(76, 175, 80, 0.6);"></div>
-                            <span>70% Confidence</span>
-                        </div>
-                        <div class="probability-band">
-                            <div class="band-color" style="background-color: #4CAF50;"></div>
-                            <span>Median</span>
-                        </div>
-                    </div>
-                    
-                    <div class="simulation-info">
-                        <div class="simulation-info-item">
-                            <div class="simulation-info-label">6-Month Projection</div>
-                            <div class="simulation-info-value" id="projection6Month">$15,200-$18,500</div>
-                        </div>
-                        <div class="simulation-info-item">
-                            <div class="simulation-info-label">1-Year Projection</div>
-                            <div class="simulation-info-value" id="projection1Year">$19,800-$26,400</div>
-                        </div>
-                        <div class="simulation-info-item">
-                            <div class="simulation-info-label">Probability of Profit</div>
-                            <div class="simulation-info-value positive" id="projectionProfitProbability">92%</div>
-                        </div>
-                        <div class="simulation-info-item">
-                            <div class="simulation-info-label">Risk of >20% Drawdown</div>
-                            <div class="simulation-info-value negative" id="projectionDrawdownRisk">15%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Performance by Symbol -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Performance by Symbol</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="symbolChart" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="symbolChart" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="symbolChart" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="symbolChart" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="symbolChart" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="chart-container chart-horizontal">
-                        <canvas id="symbolChart"></canvas>
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label">Symbol Win Rate</div>
-                            <div class="data-value" id="symbolWinRate">71%</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Avg R.R Ratio</div>
-                            <div class="data-value" id="symbolAvgRR">1:3.2</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Correlation Score</div>
-                            <div class="data-value" id="symbolCorrelation">0.42</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Volatility Match</div>
-                            <div class="data-value" id="symbolVolatility">87%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trade Duration Analysis -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Trade Duration Analysis</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="durationChart" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="durationChart" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="durationChart" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="durationChart" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="durationChart" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="chart-container chart-horizontal">
-                        <canvas id="durationChart"></canvas>
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label">Avg Trade Duration</div>
-                            <div class="data-value" id="durationAvg">17.7 min</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Max Duration</div>
-                            <div class="data-value" id="durationMax">23 min</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Min Duration</div>
-                            <div class="data-value" id="durationMin">14 min</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Optimal Duration</div>
-                            <div class="data-value" id="durationOptimal">18-20 min</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trade Entry Timing Analysis -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Trade Entry Timing Analysis</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="timingChart" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="timingChart" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="timingChart" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="timingChart" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="timingChart" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="chart-container chart-horizontal">
-                        <canvas id="timingChart"></canvas>
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label">Best Entry Hour</div>
-                            <div class="data-value" id="timingBestHour">10:00 AM</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Avg PnL</div>
-                            <div class="data-value" id="timingAvgPnL">+$90</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Win Rate</div>
-                            <div class="data-value positive" id="timingWinRate">76%</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Peak Volatility</div>
-                            <div class="data-value" id="timingPeakVol">9:30-11:00 AM</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stop Loss Efficiency -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Stop Loss Efficiency</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="stopLossChart" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="stopLossChart" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="stopLossChart" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="stopLossChart" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="stopLossChart" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="chart-container chart-small">
-                        <canvas id="stopLossChart"></canvas>
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label">Take Profit Hit Rate</div>
-                            <div class="data-value" id="stopLossTakeProfitHitRate">45%</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Stop Loss Hit Rate</div>
-                            <div class="data-value" id="stopLossHitRate">62%</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Win/Loss Ratio</div>
-                            <div class="data-value" id="stopLossWinLossRatio">1.5</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Avg True Loss</div>
-                            <div class="data-value" id="stopLossAvgTrueLoss">3.2 pts</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Maximum Drawdown -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Maximum Drawdown</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="drawdownMonthlyChart" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="drawdownMonthlyChart" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="drawdownMonthlyChart" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="drawdownMonthlyChart" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="drawdownMonthlyChart" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="chart-container chart-full-width">
-                        <canvas id="drawdownMonthlyChart"></canvas>
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label" id="drawdownWorstLabel">Worst Day</div>
-                            <div class="data-value negative" id="drawdownWorstMonth">Wednesday (-4.8%)</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label" id="drawdownBestLabel">Best Day</div>
-                            <div class="data-value positive" id="drawdownBestMonth">Monday (-0.2%)</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label" id="drawdownAvgLabel">Avg Daily Drawdown</div>
-                            <div class="data-value negative" id="drawdownMonthlyAvg">-1.8%</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label" id="drawdownBelowLabel">Days Below -2%</div>
-                            <div class="data-value" id="drawdownBelow2">5</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Strategy Success Probability -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Strategy Success Probability</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="strategyChart" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="strategyChart" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="strategyChart" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="strategyChart" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="strategyChart" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="chart-container chart-horizontal">
-                        <canvas id="strategyChart"></canvas>
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label">Top Strategy</div>
-                            <div class="data-value" id="strategyTop">Res.Break Pullback</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Avg RR</div>
-                            <div class="data-value" id="strategyAvgRR">1:3.4</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Confidence</div>
-                            <div class="data-value positive" id="strategyConfidence">92%</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Win Rate</div>
-                            <div class="data-value" id="strategyWinRate">71%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PnL vs Contract Size -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">PnL vs Contract Size</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="pnlContractChart" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="pnlContractChart" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="pnlContractChart" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="pnlContractChart" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="pnlContractChart" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="chart-container chart-horizontal">
-                        <canvas id="pnlContractChart"></canvas>
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label">Optimal Size</div>
-                            <div class="data-value" id="pnlOptimalSize">3-5 Contracts</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Max PnL</div>
-                            <div class="data-value positive" id="pnlMax">+$420</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Avg PnL</div>
-                            <div class="data-value positive" id="pnlAvg">+$85</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Win Rate</div>
-                            <div class="data-value" id="pnlWinRate">71%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Win Rate by Direction 3 -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Win Rate by Direction 3</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="winRateDirectionChart3" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="winRateDirectionChart3" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="winRateDirectionChart3" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="winRateDirectionChart3" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="winRateDirectionChart3" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="chart-container chart-horizontal">
-                        <canvas id="winRateDirectionChart3"></canvas>
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label">Total Long Wins</div>
-                            <div class="data-value positive" id="direction3LongWins">29</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Total Short Wins</div>
-                            <div class="data-value positive" id="direction3ShortWins">15</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Avg Win PnL</div>
-                            <div class="data-value positive" id="direction3AvgWinPnL">+$85</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Avg Loss PnL</div>
-                            <div class="data-value negative" id="direction3AvgLossPnL">-$42</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Error Impact Donut Chart -->
-            <div class="chart-section">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h2 class="chart-title">Error Impact Analysis</h2>
-                        <div class="time-frame-selector">
-                            <button class="time-frame-btn active" data-chart="errorImpactDonut" data-timeframe="daily">Daily</button>
-                            <button class="time-frame-btn" data-chart="errorImpactDonut" data-timeframe="weekly">Weekly</button>
-                            <button class="time-frame-btn" data-chart="errorImpactDonut" data-timeframe="monthly">Monthly</button>
-                            <button class="time-frame-btn" data-chart="errorImpactDonut" data-timeframe="yearly">Yearly</button>
-                            <button class="time-frame-btn" data-chart="errorImpactDonut" data-timeframe="all">All Time</button>
-                        </div>
-                    </div>
-                    <div class="donut-chart-container">
-                        <canvas id="errorImpactDonut"></canvas>
-                        <div class="donut-center-text">
-                            <div class="donut-main-value negative" id="errorImpactValue">$420</div>
-                            <div class="donut-main-label">Total Cost</div>
-                        </div>
-                    </div>
-                    <div class="donut-legend" id="errorImpactLegend">
-                        <!-- Legend will be populated by JavaScript -->
-                    </div>
-                    <div class="chart-data-container">
-                        <div class="data-item">
-                            <div class="data-label">Most Costly</div>
-                            <div class="data-value" id="errorImpactCostly">FOMO</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Avg Cost</div>
-                            <div class="data-value negative" id="errorImpactAvgCost">$85</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Cost Reduction</div>
-                            <div class="data-value positive" id="errorImpactReduction">-12%</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Error Frequency</div>
-                            <div class="data-value" id="errorImpactFrequency">23%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <div class="app-content">
         <!-- Strategy Tab -->
-        <div class="tab-content" id="strategy-tab">
+        <div class="tab-content active" id="strategy-tab">
             <div class="section">
                 <h2 class="section-title"><i class="fas fa-wallet"></i> Account Setup</h2>
                 <div class="input-card">
@@ -2299,7 +1830,7 @@
                     </button>
                 </div>
                 
-                <!-- NEW: Deleted Trades Section -->
+                <!-- Deleted Trades Section -->
                 <div class="deleted-trades-section">
                     <h2 class="section-title"><i class="fas fa-trash"></i> Deleted Trades</h2>
                     <div class="deleted-trades-list" id="deleted-trades-list">
@@ -2330,15 +1861,475 @@
                 </div>
             </div>
         </div>
+
+        <!-- Dashboard Tab -->
+        <div class="tab-content" id="dashboard-tab">
+            <!-- Account Summary Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Account Balance</div>
+                    <div class="stat-value profit" id="accountBalance">$8,500.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Risk Per Trade</div>
+                    <div class="stat-value" id="riskPerTrade">$36.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Win Rate</div>
+                    <div class="stat-value" id="winRate">50.0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Risk:Reward Ratio</div>
+                    <div class="stat-value risk-reward" id="riskReward">1:3</div>
+                </div>
+            </div>
+
+            <!-- Account Balance Chart -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Account Balance</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="balanceChart" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="balanceChart" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="balanceChart" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="balanceChart" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="balanceChart" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="balanceChart"></canvas>
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label">Total Return</div>
+                            <div class="data-value positive" id="balanceTotalReturn">+70%</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Starting Balance</div>
+                            <div class="data-value" id="balanceStartingBalance">$5,000.00</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Monthly Growth</div>
+                            <div class="data-value positive" id="balanceMonthlyGrowth">+5.8%</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Best Month</div>
+                            <div class="data-value positive" id="balanceBestMonth">October (+12.4%)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Account Growth Projection with Monte Carlo Simulation -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Account Growth Projection</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="projectionChart" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="projectionChart" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="projectionChart" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="projectionChart" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="projectionChart" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    
+                    <div class="projection-controls">
+                        <button class="projection-control-btn active" id="projectionTypeMonteCarlo">Monte Carlo</button>
+                        <button class="projection-control-btn" id="projectionTypeLinear">Linear</button>
+                    </div>
+                    
+                    <div class="simulation-slider">
+                        <label for="simulationCount">Simulation Count: <span id="simulationCountValue">1000</span></label>
+                        <input type="range" id="simulationCount" min="100" max="5000" step="100" value="1000">
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="projectionChart"></canvas>
+                    </div>
+                    
+                    <div class="probability-bands">
+                        <div class="probability-band">
+                            <div class="band-color" style="background-color: rgba(76, 175, 80, 0.3);"></div>
+                            <span>90% Confidence</span>
+                        </div>
+                        <div class="probability-band">
+                            <div class="band-color" style="background-color: rgba(76, 175, 80, 0.6);"></div>
+                            <span>70% Confidence</span>
+                        </div>
+                        <div class="probability-band">
+                            <div class="band-color" style="background-color: #4CAF50;"></div>
+                            <span>Median</span>
+                        </div>
+                    </div>
+                    
+                    <div class="simulation-info">
+                        <div class="simulation-info-item">
+                            <div class="simulation-info-label">6-Month Projection</div>
+                            <div class="simulation-info-value" id="projection6Month">$15,200-$18,500</div>
+                        </div>
+                        <div class="simulation-info-item">
+                            <div class="simulation-info-label">1-Year Projection</div>
+                            <div class="simulation-info-value" id="projection1Year">$19,800-$26,400</div>
+                        </div>
+                        <div class="simulation-info-item">
+                            <div class="simulation-info-label">Probability of Profit</div>
+                            <div class="simulation-info-value positive" id="projectionProfitProbability">92%</div>
+                        </div>
+                        <div class="simulation-info-item">
+                            <div class="simulation-info-label">Risk of >20% Drawdown</div>
+                            <div class="simulation-info-value negative" id="projectionDrawdownRisk">15%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance by Symbol -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Performance by Symbol</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="symbolChart" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="symbolChart" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="symbolChart" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="symbolChart" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="symbolChart" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="chart-container chart-horizontal">
+                        <canvas id="symbolChart"></canvas>
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label">Symbol Win Rate</div>
+                            <div class="data-value" id="symbolWinRate">71%</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Avg R.R Ratio</div>
+                            <div class="data-value" id="symbolAvgRR">1:3.2</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Correlation Score</div>
+                            <div class="data-value" id="symbolCorrelation">0.42</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Volatility Match</div>
+                            <div class="data-value" id="symbolVolatility">87%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trade Duration Analysis -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Trade Duration Analysis</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="durationChart" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="durationChart" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="durationChart" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="durationChart" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="durationChart" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="chart-container chart-horizontal">
+                        <canvas id="durationChart"></canvas>
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label">Avg Trade Duration</div>
+                            <div class="data-value" id="durationAvg">17.7 min</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Max Duration</div>
+                            <div class="data-value" id="durationMax">23 min</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Min Duration</div>
+                            <div class="data-value" id="durationMin">14 min</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Optimal Duration</div>
+                            <div class="data-value" id="durationOptimal">18-20 min</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trade Entry Timing Analysis -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Trade Entry Timing Analysis</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="timingChart" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="timingChart" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="timingChart" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="timingChart" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="timingChart" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="chart-container chart-horizontal">
+                        <canvas id="timingChart"></canvas>
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label">Best Entry Hour</div>
+                            <div class="data-value" id="timingBestHour">10:00 AM</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Avg PnL</div>
+                            <div class="data-value" id="timingAvgPnL">+$90</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Win Rate</div>
+                            <div class="data-value positive" id="timingWinRate">76%</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Peak Volatility</div>
+                            <div class="data-value" id="timingPeakVol">9:30-11:00 AM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stop Loss Efficiency -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Stop Loss Efficiency</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="stopLossChart" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="stopLossChart" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="stopLossChart" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="stopLossChart" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="stopLossChart" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="chart-container chart-small">
+                        <canvas id="stopLossChart"></canvas>
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label">Take Profit Hit Rate</div>
+                            <div class="data-value" id="stopLossTakeProfitHitRate">45%</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Stop Loss Hit Rate</div>
+                            <div class="data-value" id="stopLossHitRate">62%</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Win/Loss Ratio</div>
+                            <div class="data-value" id="stopLossWinLossRatio">1.5</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Avg True Loss</div>
+                            <div class="data-value" id="stopLossAvgTrueLoss">3.2 pts</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maximum Drawdown -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Maximum Drawdown</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="drawdownMonthlyChart" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="drawdownMonthlyChart" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="drawdownMonthlyChart" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="drawdownMonthlyChart" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="drawdownMonthlyChart" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="chart-container chart-full-width">
+                        <canvas id="drawdownMonthlyChart"></canvas>
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label" id="drawdownWorstLabel">Worst Day</div>
+                            <div class="data-value negative" id="drawdownWorstMonth">Wednesday (-4.8%)</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label" id="drawdownBestLabel">Best Day</div>
+                            <div class="data-value positive" id="drawdownBestMonth">Monday (-0.2%)</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label" id="drawdownAvgLabel">Avg Daily Drawdown</div>
+                            <div class="data-value negative" id="drawdownMonthlyAvg">-1.8%</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label" id="drawdownBelowLabel">Days Below -2%</div>
+                            <div class="data-value" id="drawdownBelow2">5</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy Success Probability -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Strategy Success Probability</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="strategyChart" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="strategyChart" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="strategyChart" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="strategyChart" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="strategyChart" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="chart-container chart-horizontal">
+                        <canvas id="strategyChart"></canvas>
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label">Top Strategy</div>
+                            <div class="data-value" id="strategyTop">Res.Break Pullback</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Avg RR</div>
+                            <div class="data-value" id="strategyAvgRR">1:3.4</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Confidence</div>
+                            <div class="data-value positive" id="strategyConfidence">92%</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Win Rate</div>
+                            <div class="data-value" id="strategyWinRate">71%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PnL vs Contract Size - Horizontal Bar Chart -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">PnL vs Contract Size</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="pnlContractChart" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="pnlContractChart" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="pnlContractChart" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="pnlContractChart" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="pnlContractChart" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="chart-container chart-horizontal">
+                        <canvas id="pnlContractChart"></canvas>
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label">Optimal Size</div>
+                            <div class="data-value" id="pnlOptimalSize">3-5 Contracts</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Max PnL</div>
+                            <div class="data-value positive" id="pnlMax">+$420</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Avg PnL</div>
+                            <div class="data-value positive" id="pnlAvg">+$85</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Win Rate</div>
+                            <div class="data-value" id="pnlWinRate">71%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Win Rate by Direction 3 - Stacked Bar Chart -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Win Rate by Direction 3</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="winRateDirectionChart3" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="winRateDirectionChart3" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="winRateDirectionChart3" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="winRateDirectionChart3" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="winRateDirectionChart3" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="chart-container chart-horizontal">
+                        <canvas id="winRateDirectionChart3"></canvas>
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label">Total Long Wins</div>
+                            <div class="data-value positive" id="direction3LongWins">29</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Total Short Wins</div>
+                            <div class="data-value positive" id="direction3ShortWins">15</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Avg Win PnL</div>
+                            <div class="data-value positive" id="direction3AvgWinPnL">+$85</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Avg Loss PnL</div>
+                            <div class="data-value negative" id="direction3AvgLossPnL">-$42</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Impact Donut Chart -->
+            <div class="chart-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Error Impact Analysis</h2>
+                        <div class="time-frame-selector">
+                            <button class="time-frame-btn active" data-chart="errorImpactDonut" data-timeframe="daily">Daily</button>
+                            <button class="time-frame-btn" data-chart="errorImpactDonut" data-timeframe="weekly">Weekly</button>
+                            <button class="time-frame-btn" data-chart="errorImpactDonut" data-timeframe="monthly">Monthly</button>
+                            <button class="time-frame-btn" data-chart="errorImpactDonut" data-timeframe="yearly">Yearly</button>
+                            <button class="time-frame-btn" data-chart="errorImpactDonut" data-timeframe="all">All Time</button>
+                        </div>
+                    </div>
+                    <div class="donut-chart-container">
+                        <canvas id="errorImpactDonut"></canvas>
+                        <div class="donut-center-text">
+                            <div class="donut-main-value negative" id="errorImpactValue">$420</div>
+                            <div class="donut-main-label">Total Cost</div>
+                        </div>
+                    </div>
+                    <div class="donut-legend" id="errorImpactLegend">
+                        <!-- Legend will be populated by JavaScript -->
+                    </div>
+                    <div class="chart-data-container">
+                        <div class="data-item">
+                            <div class="data-label">Most Costly</div>
+                            <div class="data-value" id="errorImpactCostly">FOMO</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Avg Cost</div>
+                            <div class="data-value negative" id="errorImpactAvgCost">$85</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Cost Reduction</div>
+                            <div class="data-value positive" id="errorImpactReduction">-12%</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Error Frequency</div>
+                            <div class="data-value" id="errorImpactFrequency">23%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- MOVED: Bottom Navigation -->
+    <!-- Bottom Navigation -->
     <div class="tab-navigation">
-        <button class="tab-button active" data-tab="dashboard-tab">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboard</span>
-        </button>
-        <button class="tab-button" data-tab="strategy-tab">
+        <button class="tab-button active" data-tab="strategy-tab">
             <i class="fas fa-chess-knight"></i>
             <span>Strategy</span>
         </button>
@@ -2349,6 +2340,10 @@
         <button class="tab-button" data-tab="calendar-tab">
             <i class="fas fa-calendar-alt"></i>
             <span>Calendar</span>
+        </button>
+        <button class="tab-button" data-tab="dashboard-tab">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
         </button>
     </div>
 </div>
@@ -2376,7 +2371,7 @@
 </div>
 
 <script>
-    // All JavaScript from both applications combined
+    // Combined JavaScript for both applications
     // Futures contracts data organized by Asset Class - MATCHING THE IMAGE EXACTLY
     const CONTRACTS_DATA = {
         'Equity Index Futures': [
@@ -2420,10 +2415,7 @@
     let tradeToDelete = null;
     let selectedTradeId = null; // Track the selected trade for delete button
 
-    // Dashboard functionality
-    let currentSimulationCount = 1000;
-
-    // Data storage for different time frames
+    // Dashboard data storage for different time frames
     const dashboardData = {
         // Account Summary Stats
         accountStats: {
@@ -2547,7 +2539,7 @@
             }
         },
         
-        // Account Growth Projection
+        // Account Growth Projection - UPDATED with dynamic simulation data
         projectionChart: {
             daily: {
                 labels: ['Today', 'Tomorrow', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
@@ -2738,7 +2730,7 @@
             }
         },
         
-        // Maximum Drawdown
+        // Maximum Drawdown - UPDATED with dynamic labels and values
         drawdownMonthlyChart: {
             daily: {
                 labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -2900,7 +2892,7 @@
             }
         },
 
-        // Win Rate by Direction 3 - Stacked Bar Chart
+        // NEW: Win Rate by Direction 3 - Stacked Bar Chart
         winRateDirectionChart3: {
             daily: {
                 labels: ['Long', 'Short'],
@@ -2949,7 +2941,7 @@
             }
         },
 
-        // Error Impact Donut
+        // Error Impact Donut - UPDATED with additional data
         errorImpactDonut: {
             daily: {
                 labels: ['FOMO', 'Boredom', 'Greed', 'Revenge', 'Chased', 'Bias', 'Missed', 'Sold Early', 'Technical'],
@@ -2999,7 +2991,10 @@
         }
     };
 
-    // Initialize the calculator when the page loads
+    // Current simulation count
+    let currentSimulationCount = 1000;
+
+    // Initialize the application when the page loads
     document.addEventListener('DOMContentLoaded', function() {
         initializeCalculator();
         setupEventListeners();
@@ -3009,6 +3004,7 @@
         setupCalendarNavigation();
         generateCalendar();
         setupModal();
+        setupDashboard();
         
         // Set today's date as default for trade log
         const today = "2025-11-20"; // Fixed to November 20, 2025
@@ -3024,14 +3020,6 @@
         
         // Load sample data for current month
         loadSampleData();
-        
-        // Initialize dashboard
-        initializeDashboard();
-        setupDashboardEventListeners();
-        loadDashboardData();
-        setupScrollIndicator();
-        setupTimeFrameSelectors();
-        setupProjectionControls();
     });
 
     function initializeCalculator() {
@@ -3199,15 +3187,9 @@
                 if (tabId === 'add-trade-tab') {
                     loadTradeHistory();
                     loadDeletedTrades();
-                }
-                
-                // Initialize dashboard if it's the first time
-                if (tabId === 'dashboard-tab') {
-                    // Ensure dashboard charts are properly initialized
-                    if (!window.dashboardInitialized) {
-                        loadDashboardData();
-                        window.dashboardInitialized = true;
-                    }
+                } else if (tabId === 'dashboard-tab') {
+                    // Refresh dashboard when switching to it
+                    loadDashboardData();
                 }
             });
         });
@@ -3230,6 +3212,11 @@
             
             // Save preference to localStorage
             localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            
+            // Update dashboard charts if they exist
+            if (typeof updateDashboardCharts === 'function') {
+                updateDashboardCharts();
+            }
         });
         
         // Check for saved dark mode preference
@@ -3318,7 +3305,7 @@
         document.getElementById('progress-fill').style.width = `${progressPercent}%`;
     }
 
-    // NEW: Show trade preview function
+    // Show trade preview function
     function showTradePreview(trade) {
         // Remove any existing preview
         const existingPreview = document.querySelector('.trade-preview');
@@ -4049,16 +4036,12 @@
         generateCalendar();
     }
 
-    // Dashboard Functions
-    function initializeDashboard() {
-        // No additional initialization needed
-    }
-
-    function setupDashboardEventListeners() {
-        // Refresh dashboard button
-        document.getElementById('refreshDashboard').addEventListener('click', function() {
-            loadDashboardData();
-        });
+    // DASHBOARD FUNCTIONS
+    function setupDashboard() {
+        setupTimeFrameSelectors();
+        setupProjectionControls();
+        setupScrollIndicator();
+        loadDashboardData();
     }
 
     function setupTimeFrameSelectors() {
@@ -4196,7 +4179,7 @@
             case 'pnlContractChart':
                 updatePnlContractChart(chart, timeframe);
                 break;
-            // Win Rate by Direction 3 chart
+            // NEW: Win Rate by Direction 3 chart
             case 'winRateDirectionChart3':
                 updateWinRateDirectionChart3(chart, timeframe);
                 break;
@@ -4251,7 +4234,7 @@
                 document.getElementById('stopLossAvgTrueLoss').textContent = data.avgTrueLoss;
                 break;
             case 'drawdownMonthlyChart':
-                // Update both values and labels for Maximum Drawdown chart
+                // UPDATED: Update both values and labels for Maximum Drawdown chart
                 document.getElementById('drawdownWorstMonth').textContent = data.worst;
                 document.getElementById('drawdownBestMonth').textContent = data.best;
                 document.getElementById('drawdownMonthlyAvg').textContent = data.avg;
@@ -4276,14 +4259,14 @@
                 document.getElementById('pnlAvg').textContent = data.avg;
                 document.getElementById('pnlWinRate').textContent = data.winRate;
                 break;
-            // Win Rate by Direction 3 chart
+            // NEW: Win Rate by Direction 3 chart
             case 'winRateDirectionChart3':
                 document.getElementById('direction3LongWins').textContent = data.longWins;
                 document.getElementById('direction3ShortWins').textContent = data.shortWins;
                 document.getElementById('direction3AvgWinPnL').textContent = data.avgWinPnL;
                 document.getElementById('direction3AvgLossPnL').textContent = data.avgLossPnL;
                 break;
-            // Error Impact chart
+            // Error Impact chart - UPDATED with new data boxes
             case 'errorImpactDonut':
                 document.getElementById('errorImpactValue').textContent = data.value;
                 document.getElementById('errorImpactCostly').textContent = data.costly;
@@ -4399,7 +4382,7 @@
         chart.update();
     }
 
-    // Win Rate by Direction 3 chart update function
+    // NEW: Win Rate by Direction 3 chart update function
     function updateWinRateDirectionChart3(chart, timeframe) {
         const data = dashboardData.winRateDirectionChart3[timeframe];
         chart.data.labels = data.labels;
@@ -4473,13 +4456,13 @@
 
     function createCharts() {
         // Set text color for white mode
-        const textColor = '#212529';
-        const gridColor = '#e9ecef';
-        const successColor = '#4cc9f0';
-        const primaryColor = '#4361ee';
-        const warningColor = '#f72585';
-        const secondaryColor = '#7209b7';
-        const dangerColor = '#e63946';
+        const textColor = getComputedStyle(document.documentElement).getPropertyValue('--dark').trim();
+        const gridColor = getComputedStyle(document.documentElement).getPropertyValue('--light-gray').trim();
+        const successColor = getComputedStyle(document.documentElement).getPropertyValue('--success').trim();
+        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+        const warningColor = getComputedStyle(document.documentElement).getPropertyValue('--warning').trim();
+        const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim();
+        const dangerColor = getComputedStyle(document.documentElement).getPropertyValue('--danger').trim();
         
         // Mobile-optimized font sizes
         const mobileFontSize = window.innerWidth <= 480 ? 12 : 14;
@@ -4612,7 +4595,7 @@
             }
         });
 
-        // Account Growth Projection Chart
+        // Account Growth Projection Chart - UPDATED with Monte Carlo simulation and green colors
         const projectionCtx = document.getElementById('projectionChart').getContext('2d');
         const baseProjectionData = dashboardData.projectionChart.daily;
         const initialDynamicData = generateDynamicProjectionData(baseProjectionData, currentSimulationCount);
@@ -5124,7 +5107,7 @@
             }
         });
 
-        // Win Rate by Direction 3 - Stacked Bar Chart
+        // NEW: Win Rate by Direction 3 - Stacked Bar Chart
         const winRateDirectionCtx3 = document.getElementById('winRateDirectionChart3').getContext('2d');
         new Chart(winRateDirectionCtx3, {
             type: 'bar',
@@ -5248,6 +5231,22 @@
         
         // Initialize projection info boxes
         updateProjectionInfoBoxes('daily', currentSimulationCount);
+    }
+
+    function updateDashboardCharts() {
+        // Update all dashboard charts when theme changes
+        const charts = [
+            'balanceChart', 'symbolChart', 'projectionChart', 'durationChart', 
+            'timingChart', 'stopLossChart', 'drawdownMonthlyChart', 'strategyChart',
+            'pnlContractChart', 'winRateDirectionChart3', 'errorImpactDonut'
+        ];
+        
+        charts.forEach(chartId => {
+            const chart = Chart.getChart(chartId);
+            if (chart) {
+                chart.update();
+            }
+        });
     }
 </script>
 </body>
